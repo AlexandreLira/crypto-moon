@@ -3,3 +3,8 @@
     background-color: rgb(251, 251, 255);
     padding: 10px
 }
+
+.home .homeWidgets{
+    display: flex;
+    margin: 20px;
+}
