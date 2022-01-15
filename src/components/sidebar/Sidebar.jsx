@@ -12,8 +12,9 @@ import {
     WorkOutline,
     Report,
     HomeOutlined,
-  } from "@material-ui/icons";
+  } from '@mui/icons-material';
 import "./sidebar.css";
+import { Link } from "react-router-dom";
 
 const sidebarMenuOptions = [
     {
@@ -21,7 +22,8 @@ const sidebarMenuOptions = [
         subOptions: [
             {
                 title: 'Home',
-                icon: <HomeOutlined />
+                icon: <HomeOutlined />,
+                to: '/',
             },
             {
                 title: 'Analytics',
@@ -38,7 +40,8 @@ const sidebarMenuOptions = [
         subOptions: [
             {
                 title: 'Users',
-                icon: <PermIdentity />
+                icon: <PermIdentity />,
+                to: 'users'
             },
             {
                 title: 'Products',
@@ -100,8 +103,10 @@ export default function Sidebar() {
                         <ul className="sidebarList">
                             {item.subOptions.map((elem, elemIndex) => (
                                 <li className={`sidebarListItem ${itemIndex === 0 && elemIndex === 0 && 'active'}`} key={elemIndex}>
-                                    {elem.icon}
-                                    <span>{elem.title}</span>
+                                        {elem.icon}
+                                   <Link to={elem.to ? elem.to : '/'}>
+                                        <span>{elem.title}</span>
+                                   </Link>
                                 </li>
                             ))}
                         </ul>
