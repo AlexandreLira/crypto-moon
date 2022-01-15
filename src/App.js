@@ -10,6 +10,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import User from "./pages/user/User";
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
       <div className="container">
         <Sidebar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/users" element={<UserList />} />
+        <Routes path="/">
+          <Route index element={<Home />} />
+          <Route path="users" element={<UserList />} />
+          <Route path="user/:userId" element={<User />} />
 
         </Routes>
       </div>

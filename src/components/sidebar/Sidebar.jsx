@@ -102,12 +102,12 @@ export default function Sidebar() {
                         <h3 className="sidebarTitle">{item.title}</h3>
                         <ul className="sidebarList">
                             {item.subOptions.map((elem, elemIndex) => (
-                                <li className={`sidebarListItem ${itemIndex === 0 && elemIndex === 0 && 'active'}`} key={elemIndex}>
+                                <Link to={elem.to ? elem.to : '/'}>
+                                    <li className={`sidebarListItem ${itemIndex === 0 && elemIndex === 0 && 'active'}`} key={elemIndex}>
                                         {elem.icon}
-                                   <Link to={elem.to ? elem.to : '/'}>
                                         <span>{elem.title}</span>
-                                   </Link>
-                                </li>
+                                    </li>
+                                </Link>
                             ))}
                         </ul>
                     </div>
