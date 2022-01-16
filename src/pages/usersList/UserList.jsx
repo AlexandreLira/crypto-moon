@@ -60,7 +60,7 @@ export default function UserList() {
   return (
     <div className="userList">
       <DataGrid
-      style={{backgroundColor: 'white'}}
+      style={{backgroundColor: 'white', margin: 20}}
         rows={data}
         columns={columns}
         pageSize={10}
