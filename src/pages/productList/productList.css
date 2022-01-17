@@ -1,0 +1,17 @@
+.productList{
+    flex: 4;
+    background-color: #fbfbff;
+}
+
+.productListProduct{
+    display: flex;
+    align-items: center;
+}
+
+
+.productListProduct img{
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 10px
+}
