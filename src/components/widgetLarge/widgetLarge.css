@@ -13,7 +13,7 @@
 
 .widgetLargeTable{
     width: 100%;
-    border-spacing: 20px;
+    border-spacing: 0px 20px;
 }
 
 .widgetLargeTr{
@@ -56,4 +56,23 @@
 .widgetLargeButton.Pending{
     background-color: #ebf1fe;
     color: #2a7ade;
+}
+
+@media only screen and (max-width: 600px) {
+    .widgetLargeTable{
+        
+        border-spacing:0px 10px;
+    }
+    .widgetLargeTr{
+        margin-top: 110px;
+    }
+    
+    .widgetLargeStatus{
+        display: none;
+    }
+    .widgetLargeDate,
+    .widgetLargeThDate{
+        display: none;
+    }
+    
 }

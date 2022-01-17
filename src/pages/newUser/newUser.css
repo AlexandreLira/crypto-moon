@@ -58,3 +58,11 @@
     margin-top: 30px;
     cursor: pointer;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .newUserItem{
+        width: 100%;
+    }
+
+}

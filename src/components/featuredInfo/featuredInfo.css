@@ -50,3 +50,13 @@
     font-size: 15px;
     color: gray
 }
+
+@media only screen and (max-width: 600px) {
+    .featured{
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    .featuredItem{
+        margin: 0px 10px 10px 10px;
+    }
+}

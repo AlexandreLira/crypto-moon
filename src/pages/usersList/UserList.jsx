@@ -59,11 +59,17 @@ export default function UserList() {
 
   return (
     <div className="userList">
+      <div className="userListTitleContainer">
+        <h1 className="userListTitle">Users</h1>
+        <Link to="/newUser">
+          <button className="userListAddButton">Create user</button>
+        </Link>
+      </div>
       <DataGrid
-      style={{backgroundColor: 'white', margin: 20}}
+        className="userListDataGrid"
         rows={data}
         columns={columns}
-        pageSize={10}
+        pageSize={8}
         rowsPerPageOptions={[5]}
         checkboxSelection
         disableSelectionOnClick

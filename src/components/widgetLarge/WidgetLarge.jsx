@@ -42,9 +42,9 @@ export default function WidgetLarge() {
             <table className="widgetLargeTable">
                 <tr className="widgetLargeTr">
                     <th className="widgetLargeTh">Customer</th>
-                    <th className="widgetLargeTh">Date</th>
+                    <th className="widgetLargeTh widgetLargeThDate">Date</th>
                     <th className="widgetLargeTh">Amount</th>
-                    <th className="widgetLargeTh">Status</th>
+                    <th className="widgetLargeTh widgetLargeStatus">Status</th>
                 </tr>
                 {latestTransactions.map((item, index) => (
                     <tr className="widgetLargeTr" key={index}>

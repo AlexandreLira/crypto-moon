@@ -3,7 +3,27 @@
     background-color: rgb(251, 251, 255);
 }
 
-.home .homeWidgets{
+.homeChart{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    margin-left: 20px;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,.05);
+}
+
+.homeWidgets{
     display: flex;
     margin: 20px;
+}
+
+@media only screen and (max-width: 600px){
+    .homeWidgets{
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .homeChart{
+        margin: 0px 10px;
+    }
 }

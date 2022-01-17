@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Timeline,
     TrendingUp,
@@ -45,7 +45,8 @@ const sidebarMenuOptions = [
             },
             {
                 title: 'Products',
-                icon: <Storefront />
+                icon: <Storefront />,
+                to: 'products'
             },
             {
                 title: 'Transactions',
@@ -94,6 +95,10 @@ const sidebarMenuOptions = [
 ]
 
 export default function Sidebar() {
+
+    const [selected, setSelected] = useState({title: 'Dashboard', subTitle: 'Home'})
+    
+
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -102,8 +107,8 @@ export default function Sidebar() {
                         <h3 className="sidebarTitle">{item.title}</h3>
                         <ul className="sidebarList">
                             {item.subOptions.map((elem, elemIndex) => (
-                                <Link to={elem.to ? elem.to : '/'}>
-                                    <li className={`sidebarListItem ${itemIndex === 0 && elemIndex === 0 && 'active'}`} key={elemIndex}>
+                                <Link to={elem.to ? elem.to : '/'} onClick={() => setSelected({title: item.title, subTitle: elem.title})}>
+                                    <li className={`sidebarListItem ${selected.title === item.title && selected.subTitle === elem.title  && 'active'}`} key={elemIndex}>
                                         {elem.icon}
                                         <span>{elem.title}</span>
                                     </li>

@@ -3,6 +3,28 @@
     background-color: #fbfbff;
 }
 
+.userListTitleContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.userListAddButton{
+    border: none;
+    border-radius: 10px;
+    background-color: teal;
+    color: white;
+    padding: 7px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.userListDataGrid{
+    background-color: white;
+    margin: 20px;
+}
+
 .userListUser{
     display: flex;
     align-items: center;

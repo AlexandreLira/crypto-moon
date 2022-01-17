@@ -167,3 +167,19 @@
     font-weight: 600;
     background-color: darkblue
 }
+
+@media only screen and (max-width: 600px) {
+    .userContainer{
+        flex-direction: column;
+    }
+    .userShow{
+        margin-right: 0px;
+        margin-bottom: 20px;
+    }
+    .userUpdateInput{
+        width: auto;
+    }
+    .userUpdateForm{
+        flex-direction: column;
+    }
+}
