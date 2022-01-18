@@ -1,23 +1,40 @@
-import { Publish } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Chart from "../../components/chart/Chart";
-import { productData, ProductRows } from "../../dummyData";
+import { apiGet } from "../../services/api";
 import "./product.css";
 
 export default function Product(){
+
+    const [data, setData] = useState([])
+    const [chartData, setChartData] = useState([])
+    const { productId } = useParams()
+    const [amount, setAmount] = useState(1)
+    useEffect(() => {
+        async function getData() {
+            
+            const response = await apiGet(`coins/${productId}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false`);
+
+            const prices = response.tickers.map(item => ({price: item.last, name: format(new Date(item.timestamp), "KK:mm")}))
+            
+            setChartData(prices.splice(10, 10))
+            setData(response)
+
+    
+        }
+        getData();
+    }, [])
     return(
         <div className="product">
             <div className="productTitleContainer">
-                <h1 className="productTitle">Product</h1>
-                <Link to="/newproduct">
-                    <button className="productAddButton">Create</button>
-                </Link>
+                <h1 className="productTitle">Coin</h1>
             </div>
             <div className="productTop">
                 <div className="productTopLeft">
                     <Chart 
-                        data={productData} 
-                        dataKey="Active User"
+                        data={chartData} 
+                        dataKey="price"
                         title="Sales Performance"
                     />
                 </div>
@@ -26,32 +43,37 @@ export default function Product(){
 
                     <div className="productInfoTop">
                         <img 
-                            src={ProductRows[0].avatar}
+                            src={data.image?.large}
                             alt="product" 
                             className="productImage" 
                         />
-                        <span className="productName">{ProductRows[0].username}</span>
+                        <span className="productName">{data.name}</span>
                     </div>
 
                     <div className="productInfoBottom">
                         <div className="productInfoItem">
-                            <span className="productInfoKey">Id:</span>
-                            <span className="productInfoValue">123</span>
+                            <span className="productInfoKey">Market cap rank:</span>
+                            <span className="productInfoValue">{data.market_cap_rank}</span>
                         </div>
 
                         <div className="productInfoItem">
-                            <span className="productInfoKey">sales:</span>
-                            <span className="productInfoValue">74</span>
+                            <span className="productInfoKey">Hashing algorithm:</span>
+                            <span className="productInfoValue">{data.hashing_algorithm}</span>
                         </div>
 
                         <div className="productInfoItem">
-                            <span className="productInfoKey">active:</span>
-                            <span className="productInfoValue">yes</span>
+                            <span className="productInfoKey">Liquidity score:</span>
+                            <span className="productInfoValue">{data.liquidity_score}</span>
                         </div>
 
                         <div className="productInfoItem">
-                            <span className="productInfoKey">In stock:</span>
-                            <span className="productInfoValue">no</span>
+                            <span className="productInfoKey">Block time in minutes:</span>
+                            <span className="productInfoValue">{data.block_time_in_minutes}</span>
+                        </div>
+
+                        <div className="productInfoItem">
+                            <span className="productInfoKey">Current price:</span>
+                            <span className="productInfoValue">${data.market_data?.current_price.usd}</span>
                         </div>
 
                     </div>
@@ -60,34 +82,16 @@ export default function Product(){
             <div className="productBottom">
                 <form action="" className="productForm">
                     <div className="productFormLeft">
-                        <label>Product Name</label>
-                        <input type="text" placeholder="product Name" />
-                        <label>In Stock</label>
-                        <select name="inStock" id="idStock">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                        <label>Active</label>
-                        <select name="active" id="active">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                        <label>Amount</label>
+                        <input type="number" value={amount} onChange={value => setAmount(value.currentTarget.value)}/>
+                        <label>Total</label>
+                        <input type="number" value={(data.market_data?.current_price.usd * amount).toFixed(7)} disabled />
+                        
+                        <button className="productButton">Buy</button>
                     </div>
 
-                    <div className="productFormRight">
-                        <div className="productUpload">
-                            <img 
-                                src={ProductRows[0].avatar} 
-                                alt="product"
-                                className="productUploadImage"
-                            /> 
-                            <label htmlFor="file" >
-                                <Publish className="productUploadIcon"/>
-                            </label>
-                            <input type="file" id="file"/>
-                        </div>
-                        <button className="productButton">Update</button>
-                    </div>
+                
+                
                 </form>
             </div>
         </div>

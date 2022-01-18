@@ -3,43 +3,61 @@ import { DataGrid } from "@mui/x-data-grid";
 import {
     format,
 } from "date-fns";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductRows } from "../../dummyData";
+import { apiGet } from "../../services/api";
 import "./productList.css";
 
 export default function ProductList() {
-    const [data, setData] = useState(ProductRows);
+    const [data, setData] = useState([]);
+
     const columns = [
-        { field: "id", headerName: "ID", width: 70, edit: false },
+        { field: "market_cap_rank", headerName: "Rank", width: 70, edit: false },
         {
-            field: "user",
-            headerName: "User",
-            width: 300,
+            field: "name",
+            headerName: "Coins",
+            width: 200,
             renderCell: (params) => (
                 <div className="productListProduct">
-                    <img src={params.row.avatar} alt="user" />
-                    {params.row.username}
+                    <img src={params.row.image} alt="user" />
+                    {params.row.name}
                 </div>
             ),
         },
         {
-            field: "category",
-            headerName: "Category",
-            width: 150,
-        },
-        {
-            field: "date",
-            headerName: "Date",
-            width: 150,
+            field: "symbol",
+            headerName: "Symbol",
+            width: 100,
             renderCell: (params) => (
-                    <span>{format(params.row.date, "dd/MM/yyyy")}</span>
+                    <span>{params.row.symbol.toUpperCase()}</span>
             ),
         },
         {
-            field: "transaction",
-            headerName: "Transaction",
+            field: "current_price",
+            headerName: "Current Price",
+            width: 150,
+        },
+        {
+            field: "high_24h",
+            headerName: "High 24h",
+            width: 100,
+        },
+        {
+            field: "low_24h",
+            headerName: "Low 24h",
+            width: 100,
+        },
+       
+        {
+            field: "price_change_percentage_24h",
+            headerName: "Percentage",
             width: 110,
+            renderCell: params => (
+                <span style={{color: params.row.price_change_percentage_24h < 0 ? 'red' : 'green' }}>
+                    {params.row.price_change_percentage_24h.toFixed(2)+"%"}
+                </span>
+            )
         },
         {
             field: "action",
@@ -48,29 +66,29 @@ export default function ProductList() {
             renderCell: (params) => (
                 <>
                     <Link to={"/product/" + params.row.id}>
-                        <button className="userListEdit">Edit</button>
+                        <button className="userListEdit">Buy</button>
                     </Link>
-                    <DeleteOutline
-                        className="userListDelete"
-                        onClick={() => handleDelete(params.row.id)}
-                    />
                 </>
             ),
         },
     ];
 
-    function handleDelete(id) {
-        setData(data.filter((item) => item.id !== id));
-    }
+    useEffect( () => {
+        async function getData(){
+            const response = await apiGet("coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false")
+            setData(response)
+        }
+        getData()
+    }, [])
+
     return (
         <div className="productList">
             <DataGrid
                 className="userListDataGrid"
                 rows={data}
                 columns={columns}
-                pageSize={8}
+                pageSize={20}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
                 disableSelectionOnClick
             />
         </div>

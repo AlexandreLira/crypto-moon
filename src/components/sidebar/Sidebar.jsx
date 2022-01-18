@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import {
     Timeline,
     TrendingUp,
-    PermIdentity,
-    Storefront,
+    AccountBalanceWallet,   
     AttachMoney,
     BarChart,
     MailOutline,
@@ -39,18 +38,14 @@ const sidebarMenuOptions = [
         title: 'Quick Menu',
         subOptions: [
             {
-                title: 'Users',
-                icon: <PermIdentity />,
+                title: 'My wallet',
+                icon: <AccountBalanceWallet />,
                 to: 'users'
             },
             {
-                title: 'Products',
-                icon: <Storefront />,
+                title: 'Buy Crypto',
+                icon: <AttachMoney />,
                 to: 'products'
-            },
-            {
-                title: 'Transactions',
-                icon: <AttachMoney />
             },
             {
                 title: 'Reports',
