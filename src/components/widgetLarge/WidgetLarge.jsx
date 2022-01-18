@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./widgetLarge.css";
-
+import { apiGet } from '../../services/api';
 export default function WidgetLarge() {
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        async function getData() {
+            
+            const response = await apiGet(
+                "coins/markets?vs_currency=usd&order=volume_desc&per_page=4&page=1&sparkline=false"
+            );
+
+            setData(response)
+    
+        }
+        getData();
+    }, [])
 
     const latestTransactions = [
         {
@@ -28,6 +43,14 @@ export default function WidgetLarge() {
             amount: 135.82,
             status: "Pending"
         },
+        {
+            name: "Diane O'Gallagher",
+            title: "Design",
+            image: "https://images.pexels.com/photos/9948310/pexels-photo-9948310.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            date: "10 Jun 2021",
+            amount: 135.82,
+            status: "Approved"
+        },
     ];
 
     const Button = ({ type }) => {
@@ -41,12 +64,12 @@ export default function WidgetLarge() {
             <h3 className="widgetLargeTitle">Latest transactions</h3>
             <table className="widgetLargeTable">
                 <tr className="widgetLargeTr">
-                    <th className="widgetLargeTh">Customer</th>
+                    <th className="widgetLargeTh">Coin</th>
                     <th className="widgetLargeTh widgetLargeThDate">Date</th>
-                    <th className="widgetLargeTh">Amount</th>
+                    <th className="widgetLargeTh">Price</th>
                     <th className="widgetLargeTh widgetLargeStatus">Status</th>
                 </tr>
-                {latestTransactions.map((item, index) => (
+                {data.map((item, index) => (
                     <tr className="widgetLargeTr" key={index}>
                         <td className="widgetLargeUser">
                             <img
@@ -56,9 +79,9 @@ export default function WidgetLarge() {
                             />
                             <span className="widgetLargeName">{item.name}</span>
                         </td>
-                        <td className="widgetLargeDate">{item.date}</td>
-                        <td className="widgetLargeAmount">R${item.amount}</td>
-                        <td className="widgetLargeStatus"><Button type={item.status} /></td>
+                        <td className="widgetLargeDate">{latestTransactions[index].date}</td>
+                        <td className="widgetLargeAmount">${item.current_price}</td>
+                        <td className="widgetLargeStatus"><Button type={latestTransactions[index].status}/></td>
                     </tr>
                 ))}
             </table>

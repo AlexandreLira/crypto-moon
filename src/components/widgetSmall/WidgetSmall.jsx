@@ -1,57 +1,36 @@
 import { Visibility } from '@mui/icons-material';
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { apiGet } from '../../services/api';
 import "./widgetSmall.css";
 
 export default function WidgetSmall() {
-    const newMembers = [
-        {
-            name: "Anna Keller",
-            title: "Soft Enginner",
-            image:
-                "https://images.pexels.com/photos/10013070/pexels-photo-10013070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-        {
-            name: "Diane O'Gallagher",
-            title: "Design",
-            image:
-                "https://images.pexels.com/photos/9948310/pexels-photo-9948310.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-        {
-            name: "Ailish Mercado",
-            title: "Product Manager",
-            image:
-                "https://images.pexels.com/photos/9780689/pexels-photo-9780689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-        {
-            name: "Anna Keller",
-            title: "Soft Enginner",
-            image:
-                "https://images.pexels.com/photos/10013070/pexels-photo-10013070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-        {
-            name: "Diane O'Gallagher",
-            title: "Design",
-            image:
-                "https://images.pexels.com/photos/9948310/pexels-photo-9948310.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-        {
-            name: "Ailish Mercado",
-            title: "Product Manager",
-            image:
-                "https://images.pexels.com/photos/9780689/pexels-photo-9780689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        },
-    ];
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        async function getData() {
+            
+            const response = await apiGet(
+                "coins/markets?vs_currency=usd&order=gecko_asc&per_page=5&page=1&sparkline=false"
+            );
+
+            setData(response)
+    
+        }
+        getData();
+    }, [])
+ 
 
     return (
         <div className="widgetSmall">
-            <span className="widgetSmallTitle">New Join Members</span>
+            <span className="widgetSmallTitle">New Coins</span>
             <ul className="widgetSmallList">
-                {newMembers.map((item, index) => (
+                {data.map((item, index) => (
                     <li className="widgetSmallItem" key={index}>
                         <img src={item.image} alt="profile" className="widgetSmallImage" />
                         <div className="widgetSmallUser">
                             <span className="widgetSmallUserName">{item.name}</span>
-                            <span className="widgetSmallUserTitle">{item.title}</span>
+                            <span className="widgetSmallUserTitle">${item.current_price}</span>
                         </div>
                         <button className="widgetSmallButton">
                             <Visibility />

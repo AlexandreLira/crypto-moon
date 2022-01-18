@@ -1,42 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import "./featuredInfo.css";
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
+import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
+import { apiGet } from "../../services/api";
 
-export default function FeaturedInfo(){
-    return(
+export default function FeaturedInfo() {
+    const [data, setData] = useState([]);
+    const [chartData, setChartData] = useState([])
+
+    useEffect(() => {
+        async function getData() {
+            const response = await apiGet(
+                "coins/markets?vs_currency=usd&order=market_cap_desc&per_page=3&page=1&sparkline=false"
+            );
+         
+            setData(response);
+    
+        }
+        getData();
+    }, []);
+  
+    return (
         <div className="featured">
-            <div className="featuredItem">
-                <span className="featuredTitle">Revanue</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$4.22</span>
-                    <span className="featuredMoneyRate">
-                        -9.43 <ArrowDownward className="featuredIcon negative"/>
-                    </span>
+            {data.map((item) => (
+                <div className="featuredItem">
+                    <div className="featuredTitleContainer">
+                        <img src={item.image} alt="coin" className="featuredCoinImage"/>
+                        <span className="featuredTitle">{item.name}</span>
+                    </div>
+                    <div className="featuredMoneyContainer">
+                        <span className="featuredMoney">${item.current_price.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</span>
+                        <span className="featuredMoneyRate">
+                            {item.price_change_percentage_24h.toFixed(2)} {item.price_change_percentage_24h < 0 ? <ArrowDownward className="featuredIcon negative" /> : <ArrowUpward className="featuredIcon"/>}
+                        </span>
+                    </div>
+                    <span className="featuredSub">Compared to last 24H</span>
                 </div>
-                <span className="featuredSub">Compared to last monthe</span>
-            </div>
-
-            <div className="featuredItem">
-                <span className="featuredTitle">Revanue</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$64.85</span>
-                    <span className="featuredMoneyRate">
-                        +11.44 <ArrowUpward className="featuredIcon"/>
-                    </span>
-                </div>
-                <span className="featuredSub">Compared to last monthe</span>
-            </div>
-
-            <div className="featuredItem">
-                <span className="featuredTitle">Revanue</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$10.64</span>
-                    <span className="featuredMoneyRate">
-                        -2.09 <ArrowDownward className="featuredIcon negative"/>
-                    </span>
-                </div>
-                <span className="featuredSub">Compared to last monthe</span>
-            </div>
-        </div>    
+            ))}
+        </div>
     );
-}   
+}

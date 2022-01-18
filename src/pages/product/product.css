@@ -10,15 +10,6 @@
     margin: 20px;
 }
 
-.productAddButton{
-    background-color: teal;
-    border: none;
-    border-radius: 10px;
-    padding: 7px 10px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px
-}
 
 .productTop{
     display: flex;
@@ -49,7 +40,7 @@
 .productImage{
     width: 60px;
     height: 60px;
-    object-fit: cover;
+    object-fit: contain;
     margin-right: 20px;
 }
 
@@ -63,7 +54,6 @@
 
 .productInfoItem{
     display: flex;
-    width: 200px;
     justify-content: space-between;
     
 }
@@ -83,7 +73,7 @@
 
 .productForm{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .productFormLeft{
@@ -100,6 +90,8 @@
     border: none;
     padding: 5px;
     border-bottom: 1px solid gray;
+    text-align: center;
+    background-color: white;
 }
 .productFormLeft>select{
     margin-bottom: 10px;
@@ -141,6 +133,7 @@
     border-radius: 5px;
     padding: 5px;
     border: none;
+    cursor: pointer
 }
 
 @media only screen and (max-width: 600px) {
